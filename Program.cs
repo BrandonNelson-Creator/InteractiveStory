@@ -39,7 +39,11 @@ namespace InteractiveStory
          //Pg7
          "The narrow path was tight but you find a massive breaker switch thats halfway.; Leave room and attempt gap.; Power on Breaker.; 8; 9",
          //Pg8
-          "You attemped the gap but realize you can't jump and end up falling and breaking your neck.; null; null; 0; 0"};
+          "You attemped the gap but realize you can't jump and end up falling and breaking your neck.; null; null; 0; 0",
+         //Pg9
+         "The breaker makes a loud snap and you suddenly hear the roar of generators start and lights come on, you leave and go back up stairs, the door is now open.; Go to door; ; 10; 10",
+         //Pg10
+         "Inside theres a red keycard, you are unsure of where to go... for now; null; null; 0; 0" };
 
          
 
@@ -54,7 +58,7 @@ namespace InteractiveStory
 
         static void RunGame()
         {
-            
+            //GameLoop
             while (true)
             {
 
@@ -72,19 +76,24 @@ namespace InteractiveStory
 
                
                 Console.Clear();
-                Console.WriteLine("Brandon");
                 Console.WriteLine(output);
                 if (pageNumber == 8)
                 {
                     Console.ReadKey(true);
                     break;
-                    Console.WriteLine("ame OVER!!!!");
+                    
+                }
+                if (pageNumber == 10)
+                {
+                    Console.ReadKey(true);
+                    break;
+
                 }
                 Console.WriteLine("A - " + choice1);
                 Console.WriteLine("B - " + choice2);
                 //Console.ReadKey(true);
                 ConsoleKeyInfo input = Console.ReadKey();
-
+                //Slections
                 if(input.Key == ConsoleKey.A)
                 {
                     pageNumber = parseNumber;
@@ -98,7 +107,8 @@ namespace InteractiveStory
                 if(input.Key == ConsoleKey.Q)
                 {
                     break;
-                    Console.WriteLine("uit")
+                    Console.Beep();
+                    Console.Beep();
                 }
 
                 
@@ -106,6 +116,7 @@ namespace InteractiveStory
 
             }
             
+            Console.WriteLine("Quit");
             Console.ReadKey(true);
         }
     }
