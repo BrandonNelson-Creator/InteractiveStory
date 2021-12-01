@@ -23,6 +23,21 @@ namespace InteractiveStory
         static string destination1;
         static string destination2;
         static bool pathIsLinear;
+        static string[] title = new string[]
+        {
+            "              /$$$$$$             /$$ /$$   /$$",
+            "             /$$__  $$           | $$|__/  | $$",
+            "             | $$ \\__/  /$$$$$$  | $$ /$$ /$$$$$$    /$$$$$$  /$$$$$$  / $$   / $$",
+            "             |  $$$$$$ /$$__  $$ | $$| $$|_  $$_/   |____ $$ /$$__  $$ | $$   | $$",
+            "             \\____  $$| $$  \\ $$ | $$| $$  | $$      /$$$$$$| $$ \\__/  | $$   | $$",
+            "              /$$ \\ $$| $$  | $$ | $$| $$  | $$ /$$ /$$__ $$| $$       | $$   | $$",
+            "             |  $$$$$$/|  $$$$$$/| $$| $$  |  $$$/ | $$$$$$$| $$       |  $$$$$$$",
+            "              \\______/ \\______/  |__/|__/  \\___/  \\_______/|__/         \\____  $$",
+            "                                                                        | $$$$$$/",
+            "                                                                        \\______/",
+            "                                     Brandon Nelson-Bernard"
+
+        };
         
 
         static string[] story = new string[] { };
@@ -58,14 +73,38 @@ namespace InteractiveStory
 
         static void Main(string[] args)
         {
-          
-            RunGame();
+            Menu();
+            RunGame(4);
            
+        }
+
+        static void Menu()
+        {
+            for (int i = 0; i < title.Length; i++)
+            {
+                Console.WriteLine(title[i]);
+            }
+
+            //OLD TITLE METHOD....
+            //Console.WriteLine("              /$$$$$$             /$$ /$$   /$$");
+            //Console.WriteLine("             /$$__  $$           | $$|__/  | $$");
+            //Console.WriteLine("             | $$ \\__/  /$$$$$$  | $$ /$$ /$$$$$$    /$$$$$$  /$$$$$$  / $$   / $$");
+            //Console.WriteLine("             |  $$$$$$ /$$__  $$ | $$| $$|_  $$_/   |____ $$ /$$__  $$ | $$   | $$");
+            //Console.WriteLine("             \\____  $$| $$  \\ $$ | $$| $$  | $$      /$$$$$$| $$ \\__/  | $$   | $$");
+            //Console.WriteLine("              /$$ \\ $$| $$  | $$ | $$| $$  | $$ /$$ /$$__ $$| $$       | $$   | $$");
+            //Console.WriteLine("             |  $$$$$$/|  $$$$$$/| $$| $$  |  $$$/ | $$$$$$$| $$       |  $$$$$$$");
+            //Console.WriteLine("              \\______/ \\______/  |__/|__/  \\___/  \\_______/|__/         \\____  $$");
+            //Console.WriteLine("                                                                        | $$$$$$/");
+            //Console.WriteLine("                                                                        \\______/");
+            //Console.WriteLine("                                     Brandon Nelson-Bernard");
+            Console.ReadKey(true);
+
         }
        
 
-        static void RunGame()
+        static void RunGame(int value)
         {
+            pageNumber = value;
             story = File.ReadAllLines(@"story.txt");
             //GameLoop
             while (true)
@@ -116,19 +155,22 @@ namespace InteractiveStory
                 if(input.Key == ConsoleKey.A)
                 {
                     pageNumber = parseNumber;
-                    Console.Beep();
+                    Console.Beep(2500, 250);
                 }
                 if (input.Key == ConsoleKey.B)
                 {
                     pageNumber = parseNumber1;
-                    Console.Beep();
+                    Console.Beep(1500, 250);
                 }
                 if(input.Key == ConsoleKey.Q)
                 {
                     Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.Beep();
-                    Console.Beep(256, 400);
+                    Console.Beep(2500, 250);
+                    Console.Beep(2000, 250);
+                    Console.Beep(1500, 250);
+                    
                     break;
+                    
                     
                 }
 
