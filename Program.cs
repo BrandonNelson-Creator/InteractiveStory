@@ -58,12 +58,12 @@ namespace InteractiveStory
                 }
 
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("A - New Game");
+                Console.WriteLine("N - New Game");
                 Console.WriteLine("L - Load Game");
                 Console.WriteLine("Q - Quit");
                 ConsoleKeyInfo input = Console.ReadKey(true);
 
-                if (input.Key == ConsoleKey.A)
+                if (input.Key == ConsoleKey.N)
                 {
                     if (CheckForFile("story.txt") == true)
                     {
@@ -114,7 +114,7 @@ namespace InteractiveStory
                 {
                     QuitGame();
                 }
-                else if (input.Key != ConsoleKey.A && input.Key != ConsoleKey.L && input.Key != ConsoleKey.Q)
+                else if (input.Key != ConsoleKey.N && input.Key != ConsoleKey.L && input.Key != ConsoleKey.Q)
                 {
                     InvaildInputMSG();
                 }
