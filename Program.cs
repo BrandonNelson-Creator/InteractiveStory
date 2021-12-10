@@ -11,9 +11,6 @@ namespace InteractiveStory
 {
     class Program
     {
-        static int freq = 256;
-        static int dur = 400;
-
         static int pageNumber = 0; 
         static string page;
         static string[] pageSection;
@@ -35,79 +32,156 @@ namespace InteractiveStory
             "              \\______/ \\______/  |__/|__/  \\___/  \\_______/|__/         \\____  $$",
             "                                                                        | $$$$$$/",
             "                                                                        \\______/",
-            "                                     Brandon Nelson-Bernard"
+            "                                     "
 
         };
         
-
+        static int savedPage;
         static string[] story = new string[] { };
-         //Main Story now in txt file
-            //Pg0
-            //{"Waking up in a daze, you look around the cold, steel room, you notice the door to your room is gone and the main door is unlocked, you get up to leave and notice there are more rooms like yours.; Leave the room; look around for anything useful; 1; 2",
-            //Pg1
-            //"Upon leaving you're startled by the dark and empty hallway, illuminated with only red revolving lights, theres a door to your left. ; Check the door; Continue down the hall; 3; 4",
-            //Pg2
-            //"When checked you find a flashlight!; Leave the room; Leave the room; 1; 1",
-            //Pg3
-            //"The door is locked; Continue down the hall; ; 4; 4",
-            //Pg4
-            //"Down the hall you see other doors but none seem to be active, but at the end you see an open stairwell to your right; Go down stairs; Check the door; 5; 6",
-            //Pg5
-            //"At the bottom you're greeted with an empty ambiance, a dark large open area with crates, theres a narrow path on your left and straight ahead from the stairs the catwalk seems to be broken.; Squeeze down path; attempt to jump gap; 7; 8",
-            //Pg6
-            //"The door is offline.; Go down stairs; 5; ",
-            //Pg7
-            //"The narrow path was tight but you find a massive breaker switch thats halfway.; Leave room and attempt gap.; Power on Breaker.; 8; 9",
-            //Pg8
-            //"You attemped the gap but realize you can't jump and end up falling and breaking your neck.; null; null; 0; 0",
-            //Pg9
-            //"The breaker makes a loud snap and you suddenly hear the roar of generators start and lights come on, you leave and go back up stairs, the door is now open.; Go to door; ; 10; 10",
-            //Pg10
-            //"Inside theres a red keycard, you are unsure of where to go... for now; null; null; 0; 0" };
-            
-        
-
-
-
-
+        static bool gameOver;
 
         static void Main(string[] args)
         {
-            Menu();
-            RunGame(4);
-           
+            Menu();   
+        }
+
+        static void Save()
+        {
+            string save = pageNumber.ToString();
+            // Writes to file
+            File.WriteAllText("save.txt", save);
+            Console.WriteLine("Game has been saved on: " + pageNumber);
+            Console.ReadKey(true);
+        }
+
+        static void Load()
+        {
+            savedPage = int.Parse(File.ReadAllText("save.txt"));
+            RunGame(savedPage);
         }
 
         static void Menu()
         {
-            for (int i = 0; i < title.Length; i++)
+            while (true)
             {
-                Console.WriteLine(title[i]);
+
+
+                Console.Clear();
+                for (int i = 0; i < title.Length; i++)
+                {
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.WriteLine(title[i]);
+                }
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("A - New Game");
+                Console.WriteLine("L - Load Game");
+                Console.WriteLine("Q - Quit");
+                ConsoleKeyInfo input = Console.ReadKey(true);
+
+                if (input.Key == ConsoleKey.A)
+                {
+                    if (CheckForFile("story.txt") == true)
+                    {
+                        RunGame(0);
+
+                    }
+                    else if (CheckForFile("story.txt") == false)
+                    {
+                        Console.WriteLine("Story Not Found!");
+                        Console.ReadKey(true);
+                       
+                    }
+
+
+                }
+                else if (input.Key == ConsoleKey.L)
+                {
+                    Load();
+                    //if (CheckForFile("save.txt") == false)
+
+
+                }
+                else if (input.Key == ConsoleKey.Q)
+                {
+                    QuitGame();
+                }
+                else if (input.Key != ConsoleKey.A && input.Key != ConsoleKey.L && input.Key != ConsoleKey.Q)
+                {
+                    InvaildInputMSG();
+                    //Call "Menu()" because Main Menu does not have gameloop
+                    Menu();
+                }
+
+                //Console.ReadKey(true);
             }
+        }
 
-            //OLD TITLE METHOD....
-            //Console.WriteLine("              /$$$$$$             /$$ /$$   /$$");
-            //Console.WriteLine("             /$$__  $$           | $$|__/  | $$");
-            //Console.WriteLine("             | $$ \\__/  /$$$$$$  | $$ /$$ /$$$$$$    /$$$$$$  /$$$$$$  / $$   / $$");
-            //Console.WriteLine("             |  $$$$$$ /$$__  $$ | $$| $$|_  $$_/   |____ $$ /$$__  $$ | $$   | $$");
-            //Console.WriteLine("             \\____  $$| $$  \\ $$ | $$| $$  | $$      /$$$$$$| $$ \\__/  | $$   | $$");
-            //Console.WriteLine("              /$$ \\ $$| $$  | $$ | $$| $$  | $$ /$$ /$$__ $$| $$       | $$   | $$");
-            //Console.WriteLine("             |  $$$$$$/|  $$$$$$/| $$| $$  |  $$$/ | $$$$$$$| $$       |  $$$$$$$");
-            //Console.WriteLine("              \\______/ \\______/  |__/|__/  \\___/  \\_______/|__/         \\____  $$");
-            //Console.WriteLine("                                                                        | $$$$$$/");
-            //Console.WriteLine("                                                                        \\______/");
-            //Console.WriteLine("                                     Brandon Nelson-Bernard");
+        static void GameOver()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Game Over!");
+            Console.WriteLine();
+            Console.WriteLine("A - Main Menu");
+            Console.WriteLine("B - Quit");
+            ConsoleKeyInfo input = Console.ReadKey(true);
+            if (input.Key == ConsoleKey.A)
+            {
+                Menu();
+            }
+            else if (input.Key == ConsoleKey.B)
+            {
+                QuitGame();
+            }
+            else if (input.Key != ConsoleKey.A && input.Key != ConsoleKey.B)
+            {
+                InvaildInputMSG();
+                //Calls "GameOver()" because GameOver does not have gameloop
+
+                GameOver();
+            }
+        }
+
+        static bool CheckForFile(string file)
+        {
+            if (File.Exists(file))
+            {
+                return true;
+                
+            }
+            return false;
+
+        }
+
+        static void InvaildInputMSG()
+        {
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Invaild Keypress");
             Console.ReadKey(true);
+        }
 
+        static void QuitGame()
+        {
+            
+            
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Beep(2500, 250);
+            Console.Beep(2000, 250);
+            Console.Beep(1500, 250);
+
+            Console.WriteLine("Quit");
+            Console.ReadKey(true);
+            Environment.Exit(0);
         }
        
 
         static void RunGame(int value)
         {
             pageNumber = value;
-            story = File.ReadAllLines(@"story.txt");
+            story = File.ReadAllLines("story.txt");
             //GameLoop
-            while (true)
+            while (gameOver == false)
             {
 
                 page = story[pageNumber];
@@ -125,6 +199,10 @@ namespace InteractiveStory
                
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("Current Page: " + pageNumber);
+                Console.WriteLine();
+                Console.WriteLine("--------------------------------------------------------------------------------");
+                Console.WriteLine();
                 Console.WriteLine(output);
                
                 if (pageNumber == 8)
@@ -139,8 +217,10 @@ namespace InteractiveStory
                     break;
 
                 }
+                if (pageNumber == 10 || pageNumber == 8) { gameOver = true; }
                 if (pageNumber == 2 || pageNumber == 3 || pageNumber == 6 || pageNumber ==  9) { pathIsLinear = true; }
-                else { pathIsLinear = false; }
+                else { pathIsLinear = false; gameOver = false; }
+                Console.WriteLine();
                 if (pathIsLinear) { Console.ForegroundColor = ConsoleColor.Red; Console.WriteLine("A - " + choice1); }
                 else if (!pathIsLinear)
                 {
@@ -149,39 +229,57 @@ namespace InteractiveStory
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("B - " + choice2);
                 }
-                //Console.ReadKey(true);
-                ConsoleKeyInfo input = Console.ReadKey();
+
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine();
+                Console.WriteLine("--------------------------------------------------------------------------------");
+                Console.WriteLine();
+                Console.WriteLine("S - Save");
+                Console.WriteLine("Q - Quit");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("M - Main Menu");
+            //Console.ReadKey(true);
+            ConsoleKeyInfo input = Console.ReadKey(true);
                 //Slections
                 if(input.Key == ConsoleKey.A)
                 {
                     pageNumber = parseNumber;
                     Console.Beep(2500, 250);
                 }
-                if (input.Key == ConsoleKey.B)
+                if (!pathIsLinear)
                 {
-                    pageNumber = parseNumber1;
-                    Console.Beep(1500, 250);
+                    if (input.Key == ConsoleKey.B)
+                    {
+                        pageNumber = parseNumber1;
+                        Console.Beep(1500, 250);
+                    }
                 }
+                
                 if(input.Key == ConsoleKey.Q)
                 {
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.Beep(2500, 250);
-                    Console.Beep(2000, 250);
-                    Console.Beep(1500, 250);
-                    
+                    QuitGame();
+   
+                }
+                if (input.Key == ConsoleKey.S)
+                {
+                    Save();
+                }
+                if(input.Key == ConsoleKey.M)
+                {
+                    Menu();
+                }
+                if (gameOver == true)
+                {
+                    Console.Clear();
                     break;
-                    
-                    
+                }
+                else if(input.Key != ConsoleKey.A && input.Key != ConsoleKey.B && input.Key != ConsoleKey.Q && input.Key != ConsoleKey.S && input.Key != ConsoleKey.M  )
+                {
+                    InvaildInputMSG();
                 }
 
-
-                
-
-
-            }
-            
-            Console.WriteLine("Quit");
-            Console.ReadKey(true);
+            }            
+                GameOver();
         }
     }
 }
