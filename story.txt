@@ -4,8 +4,8 @@ When checked you find a flashlight!; Leave the room; Leave the room; 1; 1
 The door is locked; Continue down the hall; ; 4; 4
 Down the hall you see other doors but none seem to be active, but at the end you see an open stairwell to your right; Go down stairs; Check the door; 5; 6
 At the bottom you're greeted with an empty ambiance, a dark large open area with crates, theres a narrow path on your left and straight ahead from the stairs the catwalk seems to be broken.; Squeeze down path; attempt to jump gap; 7; 8
-The door is offline.; Go down stairs; ; 5; 0  
+The door is offline.; Go down stairs; ; 5; 5  
 The narrow path was tight but you find a massive breaker switch thats halfway.; Leave room and attempt gap.; Power on Breaker.; 8; 9
-You attemped the gap but realize you can't jump and end up falling and breaking your neck.; null; null; 0; 0
-The breaker makes a loud snap and you suddenly hear the roar of generators start and lights come on, you leave and go back up stairs, the door is now open.; Go to door; ; 10; 0
-Inside theres a red keycard, you are unsure of where to go... for now; null; null; 0; 0
+You attemped the gap but realize you can't jump and end up falling and breaking your neck.; GameOver; GameOver; 0; 0
+The breaker makes a loud snap and you suddenly hear the roar of generators start and lights come on, you leave and go back up stairs, the door is now open.; Go to door; ; 10; 10
+Inside theres a red keycard, you are unsure of where to go... for now; GameOver; GameOver; 0; 0
